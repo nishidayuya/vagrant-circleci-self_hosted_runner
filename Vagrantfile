@@ -1,19 +1,20 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require "etc"
+
+n_cpus = ENV.fetch("VIRTUALBOX_CPUS", Etc.nprocessors).to_i
+memory_mega_bytes = ENV.fetch("VIRTUALBOX_MEMORY", 1024).to_i
+
 Vagrant.configure("2") do |config|
-  # https://packages.debian.org/search?keywords=openvpn&searchon=names&suite=all&section=all
-  # https://packages.ubuntu.com/search?keywords=openvpn&searchon=names&suite=all&section=all
-  config.vm.box = "debian/bookworm64" # 2023-06-10 Debian 12 openvpn-2.6.3-1+deb12u1
-  # config.vm.box = "ubuntu/jammy64" # 2022-04-21 Ubuntu 22.04 openvpn-2.5.5-1ubuntu3.1
-  # config.vm.box = "debian/bullseye64" # 2021-08-14 Debian 11 openvpn-2.5.1-3
-  # config.vm.box = "ubuntu/focal64" # 2020-04-23 Ubuntu 20.04 openvpn-2.4.7-1ubuntu2.20.04.4
-  # config.vm.box = "debian/buster64" # 2019-06-06 Debian 10 openvpn-2.4.7-1+deb10u1
+  config.vm.box = "ubuntu/jammy64"
 
-  # config.vm.provider(:virtualbox) do |vb|
-  #   vb.gui = true
-  # end
+  config.vm.provider(:virtualbox) do |vb|
+    vb.cpus = n_cpus
+    vb.memory = memory_mega_bytes
+  end
 
+=begin
   config.vm.provision(:shell, privileged: false, inline: <<~SHELL)
     set -eux
     if ps $$ | grep -q bash
@@ -39,4 +40,5 @@ Vagrant.configure("2") do |config|
       /vagrant/run_after_provision
     fi
   SHELL
+=end
 end
