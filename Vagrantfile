@@ -4,7 +4,7 @@
 require "etc"
 
 n_cpus = ENV.fetch("VIRTUALBOX_CPUS", Etc.nprocessors).to_i
-memory_mega_bytes = ENV.fetch("VIRTUALBOX_MEMORY", 1024).to_i
+memory_mega_bytes = ENV.fetch("VIRTUALBOX_MEMORY", 1024 * 8).to_i
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/jammy64"
