@@ -14,31 +14,19 @@ Vagrant.configure("2") do |config|
     vb.memory = memory_mega_bytes
   end
 
-=begin
   config.vm.provision(:shell, privileged: false, inline: <<~SHELL)
-    set -eux
+    set -eu
     if ps $$ | grep -q bash
     then
       set -o pipefail
     fi
 
-    os=$(lsb_release -si | tr '[:upper:]' '[:lower:]')-$(lsb_release -sr)
-    sudo apt-get update --allow-releaseinfo-change
-    sudo apt-get install -y \
-      ca-certificates \
-      openvpn \
-      rsync
-    sudo rsync -avH --chown root:root --exclude='*.for_*' /vagrant/data/ /
-    find /vagrant/data -name "*.for_$os" -print0 |
-      xargs -n1 -0 sh -c '
-        sudo install -v -o root $0 $(echo $0 | sed -e "s|^/vagrant/data/|/|" -e "s/\.for_.*//")
-      '
-    sudo update-ca-certificates
-    sudo systemctl restart openvpn@raichu.service
-    if test -x /vagrant/run_after_provision
-    then
-      /vagrant/run_after_provision
-    fi
+    for f in $(ls /vagrant/scripts/*.sh)
+    do
+      test -x $f || continue
+      echo start: $f
+      $f
+      echo end: $f
+    done
   SHELL
-=end
 end
