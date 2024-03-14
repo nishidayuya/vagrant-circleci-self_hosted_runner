@@ -1,0 +1,12 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2024.02-22.04
+    resource_class: nishidayuya/test_2024_03_1
+    steps:
+      - run: echo "Hi I'm on a Container Runner!"
+workflows:
+  build-workflow:
+    jobs:
+      - build
