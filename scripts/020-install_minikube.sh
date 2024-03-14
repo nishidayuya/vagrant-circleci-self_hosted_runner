@@ -2,6 +2,8 @@
 
 set -eux
 
+# TODO: 指定したバージョン
+# TODO: チェックサム確認
 # Debian package installation on
 # https://minikube.sigs.k8s.io/docs/start/#what-youll-need
 sudo apt-get update
@@ -20,6 +22,7 @@ sudo ln -sfv $(which minikube) /usr/local/bin/kubectl
 kubectl get po -A
 kubectl get nodes
 
+# TODO: APT化https://helm.sh/ja/docs/intro/install/#apt-%E3%81%8B%E3%82%89-debianubuntu
 # https://github.com/helm/helm/releases
 work_path=$(mktemp -d)
 cd $work_path
