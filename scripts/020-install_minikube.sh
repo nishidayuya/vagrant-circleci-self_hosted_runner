@@ -27,3 +27,4 @@ wget https://get.helm.sh/helm-v3.14.3-linux-amd64.tar.gz
 tar xf helm-v3.14.3-linux-amd64.tar.gz
 sudo install -v -m 755 linux-amd64/helm /usr/local/bin/
 rm -rf $work_path
+cd
