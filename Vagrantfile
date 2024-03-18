@@ -21,6 +21,8 @@ Vagrant.configure("2") do |config|
       set -o pipefail
     fi
 
+    export CIRCLECI_TOKEN='#{ENV.fetch("CIRCLECI_TOKEN")}'
+
     for f in $(ls /vagrant/scripts/*.sh)
     do
       test -x $f || continue

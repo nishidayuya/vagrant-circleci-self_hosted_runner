@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eu
+set -eux
 
 if test -z "$CIRCLECI_TOKEN" = ""
 then
@@ -10,7 +10,11 @@ fi
 
 helm repo add container-agent https://packagecloud.io/circleci/container-agent/helm
 helm repo update
-kubectl create namespace circleci
+
+if ! kubectl get namespace circleci > /dev/null 2> /dev/null
+then
+  kubectl create namespace circleci
+fi
 
 # TODO: mktemp
 f=/tmp/values.yml
