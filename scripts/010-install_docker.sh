@@ -25,5 +25,4 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 sudo docker run --rm hello-world
 sudo docker rmi hello-world
 
-sudo adduser $USER docker
-newgrp docker
+sudo adduser $(id -nu) docker
