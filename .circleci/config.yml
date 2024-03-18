@@ -3,8 +3,9 @@ jobs:
   build:
     docker:
       - image: cimg/base:2024.02-22.04
-    resource_class: nishidayuya/test_2024_03_1
+    resource_class: nishidayuya/test_2024_03_2
     steps:
+      - run: date
       - run: echo "Hi I'm on a Container Runner!"
 workflows:
   build-workflow:
